@@ -42,7 +42,11 @@
 
 ## SCREENSHOTS/SAMPLE OUTPUT (atleast two)
 ![image_alt](https://github.com/KyleneBurgos/Computer-Science-2-Q3-Project/blob/6ef7a6878f6213a659cfffb1d9680661f6f1cf14/Screenshot%202026-03-16%20230012.png)
-![image_alt](
+![image_alt](https://github.com/KyleneBurgos/Computer-Science-2-Q3-Project/blob/bce347673e9c0caab00a12d0453e227e9d18a419/Screenshot%202026-03-16%20230052.png)
+![image_alt](https://github.com/KyleneBurgos/Computer-Science-2-Q3-Project/blob/bce347673e9c0caab00a12d0453e227e9d18a419/Screenshot%202026-03-16%20230255.png)
+![image_alt](https://github.com/KyleneBurgos/Computer-Science-2-Q3-Project/blob/bce347673e9c0caab00a12d0453e227e9d18a419/Screenshot%202026-03-16%20230338.png)
+![image_alt](https://github.com/KyleneBurgos/Computer-Science-2-Q3-Project/blob/bce347673e9c0caab00a12d0453e227e9d18a419/Screenshot%202026-03-16%20230515.png)
+
 
  ## AUTHORS/CONTRIBUTORS
 
