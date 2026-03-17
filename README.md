@@ -41,7 +41,8 @@
 ### 8. Finish the level and check the score to see how you did on that level.
 
 ## SCREENSHOTS/SAMPLE OUTPUT (atleast two)
- 
+![image_alt](https://github.com/KyleneBurgos/Computer-Science-2-Q3-Project/blob/6ef7a6878f6213a659cfffb1d9680661f6f1cf14/Screenshot%202026-03-16%20230012.png)
+![image_alt](
 
  ## AUTHORS/CONTRIBUTORS
 
