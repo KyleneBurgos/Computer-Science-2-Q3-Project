@@ -1,4 +1,4 @@
-    import random as rand
+import random as rand
 import math
 import time
 
