@@ -3,44 +3,48 @@ import math
 import time
 
 points = 0
-artifact = 1 #Expanded in the future
-lives = 50
-protection = 1 #Expanded in the future
+
+lives = 100
 
 symbols1 = ("+","-")
 symbols2 = ("*","/")
 symbols3 = ("^", "√")
-
-def space(x):       #Adds blank lines
+    
+def space(x):
     for i in range(x):
         print("")
-        
-def randSymbol1():  #Picks randomly from values of 'symbols1', which is + and -
+            
+def randSymbol1():
     return symbols1[rand.randint(0,1)]
 
-def randSymbol2():  #Picks randomly from combined values of 'symbols1' and 'symbols2', which is +,-,* and /
+def randSymbol2():
     combinedSymbols1 = symbols1 + symbols2
     return combinedSymbols1[rand.randint(0,3)]
 
-def randSymbol3():  #Picks randomly from combined values of 'symbols1','symbols2', and 'symbol3', which is +,-,*,/,^ and √
+def randSymbol3():
     combinedSymbols2 = symbols1 + symbols2 + symbols3
     return combinedSymbols2[rand.randint(0,5)]
 
-def mathProblems(grade):    #Controls the difficulty of questions, each number corresponds to a grade level. 
+def miniMax(mini,maxi):
+    return mini, maxi
+
+def mathProblems(grade):
     config = {
         1: {"symbol": lambda: "+",  "min": 1, "normMax":10},
         2: {"symbol": randSymbol1,  "min": 1, "normMax":20},
         3: {"symbol": randSymbol1,  "min": 1, "normMax":50},
         4: {"symbol": randSymbol2,  "min": 1, "normMax":100, "advMax":12},
-        5: {"symbol": randSymbol3,  "min": 1, "normMax":200, "advMax":25, "powMax":5, "exp":2},
-        6: {"symbol": randSymbol3,  "min": 1, "normMax":500, "advMax":50, "powMax":9, "exp":3} }
+        5: {"symbol": randSymbol3,  "min": 1, "normMax":150, "advMax":20, "powMax":5, "exp":2},
+        6: {"symbol": randSymbol3,  "min": 1, "normMax":300, "advMax":35, "powMax":9, "exp":3},
+        7: {"symbol": randSymbol3, "min": 2, "normMax": 500, "advMax": 50, "powMax":9, "exp":3},
+        8: {"symbol": randSymbol3, "min": 5, "normMax":750, "advMax": 85, "powMax": 12, "exp":4}}
     
-    return config.get(grade,config[1]) #if smth went wrong, default to Grade 1
+    return config[grade]
     
 
 def genNumbers(symbol,grade): #number generator that ensures no decimals and no negatives
 
-    mini = grade["min"]     #smallest no. allowed
+    mini = grade["min"]
 
     if symbol in ("+", "-"):
         maxi = grade["normMax"]
@@ -51,99 +55,117 @@ def genNumbers(symbol,grade): #number generator that ensures no decimals and no 
     elif symbol in ("^", "√"):
         maxi = grade["powMax"]
         exp = grade["exp"]
-    #based on each symbol
-    if symbol == "+":
-        num1 = rand.randint(mini,maxi)
-        num2 = rand.randint(mini, maxi)
-        correct = num1+num2
-
+    
+    if symbol == "/":
+        num2 = rand.randint(mini, max(2, maxi)) #doesnt make it divide by 0 since the limit is 2 to prevent undefined
+        num1 = num2 * rand.randint(1, maxi // num2) #makes num1 a factor of num2 so no decimals
+        
     elif symbol == "-":
         num1 = rand.randint(mini,maxi)
         num2 = rand.randint(mini,num1) #makes the num2 always smaller or equal to num1, preventing negatives
-        correct = num1-num2 
 
-    elif symbol == "*":
-        num1 = rand.randint(mini,maxi)
-        num2 = rand.randint(mini, maxi)
-        correct = num1*num2
-
-    elif symbol == "/": 
-        num2 = rand.randint(mini, max(2, maxi)) #doesnt make it divide by 0 since the limit is 2 to prevent undefined
-        correct = rand.randint (1,max(1, maxi// num2))  #multiplier (a.k.a  nswer)  turn mun1 into a factor of num2; prevents randint(1,0) which can make program crash
-        num1 = num2 * correct                    #makes num2 a factor of num1 so no decimals
-    
     elif symbol == "^":
         num1 = rand.randint(mini,maxi)
         num2 = exp
-        correct = num1**num2
-
+        
     elif symbol == "√":
-        correct = rand.randint(2,8) # the base
         num2 = rand.randint(2,exp)
-        num1 = correct**num2
+        num1 = rand.randint(2,maxi)**num2
     else:
         num1 = rand.randint(mini,maxi)
         num2 = rand.randint(mini,maxi)
-        correct = num1+num2
-    return num1, num2, correct        
+        
+    return num1, num2        
+        
+def calculate(num1, num2, symbol):
+    if symbol == "+":
+        return num1 + num2
+    elif symbol == "-":
+        return num1 - num2
+    elif symbol == "*":
+        return num1 * num2
+    elif symbol == "/":
+        return num1 // num2
+    elif symbol == "^":
+        return num1 ** num2
+    elif symbol == "√":
+        return round(num1 ** (1/num2))
 
-def question(grade, multiplier, attempts):
+def question(grade, multiplier, attempts, state):
 
-    global points, lives                #so it can actually be modified
     config = mathProblems(grade)
     symbol = config["symbol"]()
-    num1, num2, correct = genNumbers(symbol, config)
+    num1, num2 = genNumbers(symbol, config)
+    correct = calculate(num1, num2, symbol)
 
-    print(f"{num1} {symbol} {num2} = ?")
-    while attempts > 0:
+    print(f"{num1} {symbol} {num2} = ?\n")
+    while attempts != 0:
         try:
             answer = int(input(">>     "))
         except ValueError:
-            print("Uhm.. What? Input the right format of answer")
+            print("Uhm.. What? Input the right format of answer\n")
             continue
 
         if answer == correct:
-            points += (multiplier*artifact)
+            state['points'] += (1*multiplier)
             print("")
             print("Verdict: Correct!")
-            print(f"Points: {points}")
-            return
+            print(f"Points: {state['points']}\n")
+            break
         else:
             attempts -= 1
-            points -= 1
+            state['points'] -= 1
             print("")
             print("Verdict: Wrong!")
-            print(f"Attempts left: {attempts}")
+            print(f"Attempts left: {attempts}\n")
+
         print("")
-    lives = max(0,lives - (5*protection))
-    print(f"Lives: {lives}")
+        if attempts == 0:
+            state['lives'] -= (50)
+            print(f"Lives: {state['lives']}\n")
 
-#_________________________Gameloop_________________________
+def runGame(playerName, state): #so that each person has their unique stuff
+    
+    print(f"Welcome, {playerName}! Let's begin.\n")
 
-while lives > 0:
-    print("""Are you ready to enter the stages of math?
-Well even if you aren't, then we are starting!
-""")
+    choice = 0
+    while state["lives"] > 0 and choice != 2:
+        print("1. Play")
+        print("2. Quit to menu")
 
-    print("-----Stage 1: Easy (Grade 1-2) -----")
-    for i in range(1,6):
-        question(1,1,3)
-        print("")
+        try:
+            choice = int(input("Enter your choice.. >> "))
+            
+        except ValueError:
+             print("I cant read this format..\n")
+             continue
 
-    print("Great, you are doing well so far. Lets crank up the difficulty!")
-    print("-----Stage 2: Medium (Grade 3-4) -----")
-    for i in range(1,6):
-        question(4,1,3)
-        print("")
-    lives += 15
-    print("Im surprised you survived that. Good luck, you'll need these lives.")
-    print(f"Lives = {lives}")
-    print("")
-    print("-----Stage 3: Hard (Grade 5-6) -----")
-    for i in range (1,4):
-        print("Sudden Death")
-        question(6,1,1)
-        print("")   
+        if choice < 1 or choice > 2:
+            print("Thats not in the choices..\n")
+            continue
         
-    print("Oh well since you actually passed that somehow.. great job!")
-    space(5)
+        elif choice == 2:
+            break
+
+
+        #Stage 1 place holder
+        space(2)
+        if choice == 1:
+##            space(5)
+##            print("Once upon a time, in a dorm far far away, you were studying all\n")
+##
+##            print("night and became thirsty while cramming for a math test tomorrow.\n")
+##
+##            time.sleep(3)
+##
+##            print("You decided to get up and grab a glass of fresh coffee.\n")
+##
+##            
+##            print("As you made your way back to your desk...\n")
+##            time.sleep(4)
+##            print(",you tripped over a piece of scratch paper you\n")
+##            print("were using to vent out your mathematical stress..\n")
+##            space(2)
+##
+##            time.sleep(5)
+##          
