@@ -43,7 +43,7 @@
 ### 8. Finish the level and check the score to see how you did on that level.
 
 ## SCREENSHOTS/SAMPLE OUTPUT (atleast two)
-[here](https://github.com/KyleneBurgos/Computer-Science-2-Project/blob/e949017bca6a67fe6d482a03b9072f670a75e764/CS-Documentation.pdf)
+### see documentation [here](https://github.com/KyleneBurgos/Computer-Science-2-Project/blob/e949017bca6a67fe6d482a03b9072f670a75e764/CS-Documentation.pdf)
 
  ## AUTHORS/CONTRIBUTORS
 
