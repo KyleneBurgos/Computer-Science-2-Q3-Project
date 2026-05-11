@@ -1,4 +1,4 @@
-# Computer-Science-2-Q4-Project
+# Computer-Science-2-Project
 # PROJECT TITLE: The Equation Chronicles: A Math RPG Game
 ## PROJECT DESCRIPTION
 ### 	This project combines the intricate concepts of Mathematics with the entertainment from video games. Its main audience consists of Elementary to Middle school students that struggle with balancing gaming and studying. It revolves around the player exploring the map of the game while solving mathematical equations in a story-like manner. It aims to combine the opposite qualities of both genres to make learning more enjoyable without it feeling draining or exhausting. The different stage levels that align with the player’s grade level indicates that the project isn’t limited to basic arithmetic but also contains 1st grade to 8th grade math. The project expects that all players would be able to enjoy the beauty of mathematics with a method they’re already familiar with for easier balance with their academic life and internet access.
@@ -42,7 +42,7 @@
 ### 7. A correct answer gives the user points while an incorrect answer subtracts a life from their limited tries. 
 ### 8. Finish the level and check the score to see how you did on that level.
 
-## SCREENSHOTS/SAMPLE OUTPUT (atleast two)
+## SCREENSHOTS 
 ### see documentation [here](https://github.com/KyleneBurgos/Computer-Science-2-Project/blob/e949017bca6a67fe6d482a03b9072f670a75e764/CS-Documentation.pdf)
 
  ## AUTHORS/CONTRIBUTORS
